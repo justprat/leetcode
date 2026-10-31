@@ -46,9 +46,11 @@ public:
                 }
 
                 slow = i;
-                while(slow > 0){
-                    nums[slow] = 0;
-                    slow = getNext(slow,nums);
+                while (nums[slow] != 0 && (nums[slow] > 0) == isForward) {
+                    int nextIndex = getNext(slow, nums); // 1. Grab the next index while the current value is still valid
+                    nums[slow] = 0;                     // 2. Safely mark the current index as visited
+                    if (nextIndex == -1e7) break;       // 3. Stop if it hits a dead end (like a 1-element loop)
+                    slow = nextIndex;                   // 4. Move to the next index
                 }
 
             }
