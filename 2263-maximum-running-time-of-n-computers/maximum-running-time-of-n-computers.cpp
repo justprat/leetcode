@@ -26,6 +26,7 @@ public:
         for(int i = 0 ; i < batteries.size() ; i++){
             e = e + batteries[i];
         }
+        e = e / n;
 
         while(e >= s){
 
