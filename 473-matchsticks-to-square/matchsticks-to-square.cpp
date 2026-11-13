@@ -14,7 +14,7 @@ public:
 
             if(used[i]) continue;
             if(sum + matchsticks[i] > need) break;
-            
+            if(i > j && matchsticks[i] == matchsticks[i-1] && used[i-1]) continue;
             //take
             used[i] = 1;
             if(sum + matchsticks[i] == need){
