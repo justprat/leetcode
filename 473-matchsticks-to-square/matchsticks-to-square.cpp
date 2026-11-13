@@ -13,7 +13,7 @@ public:
         for(int i = j ; i < n ; i++){
 
             if(used[i]) continue;
-            if(sum + matchsticks[i] > need) continue;
+            if(sum + matchsticks[i] > need) break;
             
             //take
             used[i] = 1;
@@ -32,7 +32,7 @@ public:
 
     bool makesquare(vector<int>& matchsticks) {
 
-        sort(matchsticks.rbegin(),matchsticks.rend());
+        sort(matchsticks.begin(),matchsticks.end());
         int sum = accumulate(matchsticks.begin(),matchsticks.end(),0);
 
         need = sum / 4;
