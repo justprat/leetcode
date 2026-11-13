@@ -1,32 +1,28 @@
 class Solution {
 public:
+
     bool solve(int idx ,vector<int> &taken, vector<pair<char,int>> &uniqueChars,
-            vector<long long> &weights , bool cannotBeZero[],int remaining){
+            vector<long long> &weights , bool cannotBeZero[], long long currentSum){
 
-        if(remaining == 0){
-            long long sum = 0;
-            for(int i = 0 ; i < uniqueChars.size() ; i++){
-                sum += weights[i] * uniqueChars[i].second;
-            }
-
-            return (sum == 0);
+        // Base case: all characters assigned
+        if(idx == uniqueChars.size()){
+            return (currentSum == 0);
         }
 
-        //try to take a unused value 
+        //try to take an unused value 
         for(int val = 0 ; val <= 9 ; val++){
 
             if(taken[val]) continue;
             if(val == 0 && cannotBeZero[uniqueChars[idx].first - 'A']) continue;
 
-            taken[val]++;
-            uniqueChars[idx].second = val;
-            if(solve(idx+1,taken,uniqueChars,weights,cannotBeZero,remaining - 1)) return true;
-            uniqueChars[idx].second = -1;
-            taken[val]--;  
+            taken[val] = 1;
+            long long nextSum = currentSum + (weights[idx] * val);
+            
+            if(solve(idx+1, taken, uniqueChars, weights, cannotBeZero, nextSum)) return true;
+            taken[val] = 0;  
         }
 
         return false;
-
     }
 
     bool isSolvable(vector<string>& words, string result){
@@ -54,9 +50,7 @@ public:
 
         //2. add weights
         for(int i = 0 ; i < words.size() ; i++){
-
             int right = words[i].size();
-
             for(int left = 0; left < right ; left++){
                 charToWeight[words[i][left]] += (long long) pow(10,right - left - 1);
             }
@@ -73,8 +67,7 @@ public:
             weights[i] = charToWeight[uniqueChars[i].first];
         }
 
-        vector<int>taken(10,0);
-        return solve(0 ,taken, uniqueChars , weights , cannotBeZero, uniqueChars.size());
-        
+        vector<int> taken(10,0);
+        return solve(0, taken, uniqueChars, weights, cannotBeZero, 0);
     }
 };
