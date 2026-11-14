@@ -12,6 +12,11 @@ public:
         }
 
         for(int k = 0 ; k < workers.size() ; k++){
+
+            if (workers[k] + jobs[i] >= res) {
+                continue; 
+            }
+
             workers[k] += jobs[i];
             solve(i + 1,jobs,workers,max(highestJob,workers[k]));
             workers[k] -= jobs[i];
