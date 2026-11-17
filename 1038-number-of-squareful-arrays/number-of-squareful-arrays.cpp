@@ -45,7 +45,7 @@ public:
 
     int numSquarefulPerms(vector<int>& nums) {
 
-        sort(nums.rbegin(),nums.rend());
+        sort(nums.begin(),nums.end());
 
         int n = nums.size();
         
